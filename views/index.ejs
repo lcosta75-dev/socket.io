@@ -1,16 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>TESTE</h1>
+    <input type="text" id="palavra">
+    <button onclick="enviar()">Enviar</button>
+    <hr>
+    <p id="resultado"></p>
 </body>
-<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+    integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+    crossorigin="anonymous"></script>
 <script>
     var socket = io("http://localhost:3000")
+    socket.emit("boasvindas", { nome: "Lais Costa" })
+
+    socket.on("resultado", (data) => {
+        console.log(data)
+
+        var p = document.getElementById("resultado")
+        p.innerHTML = data
+    })
+
+    function enviar() {
+        var input = document.getElementById("palavra")
+        console.log(input.value)
+        socket.emit("palavra", input.value)
+    }
 </script>
+
 </html>
